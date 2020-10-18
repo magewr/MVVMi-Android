@@ -11,6 +11,7 @@ import com.magewr.mvvmi.clients.apis.APIQuotes
 import com.magewr.mvvmi.databinding.ActivityMainBinding
 import com.magewr.mvvmi.interactors.Quotes.QuotesInteractor
 import com.magewr.mvvmi.scenes.main.viewmodel.QuotesViewModel
+import java.util.concurrent.TimeUnit
 
 class MainActivity : RxActivity<QuotesViewModel>() {
     private lateinit var bnd: ActivityMainBinding
@@ -26,6 +27,7 @@ class MainActivity : RxActivity<QuotesViewModel>() {
 
     override fun bindInputs() {
         bnd.btnNext.clicks()
+            .throttleFirst(300, TimeUnit.MILLISECONDS)
             .subscribe{ viewModel.input.getRandomQuotes.onNext(Unit) }
             .apply { disposeBag.add(this) }
     }
