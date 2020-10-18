@@ -9,9 +9,12 @@ Android, iOS 통합 아키텍쳐로 Model, ViewModel, Interactor 레이어는 �
 
 View 레이어는 각각의 플랫폼에 종속됩니다.
 
-현재 코드는 초창기 형태로 지속 변경될 수 있습니다.
+View 레이어를 제외한 각각의 레이어는 Interface로 참조됩니다.
+
+이 Interface를 구현한 Mock or Stub을 통해 각각의 레이어에서 UnitTest가 이루어집니다.
 
 ##
 
+현재 코드는 초창기 형태로 지속 변경될 수 있습니다.
 
 iOS Code : https://github.com/magewr/MVVMi-iOS
