@@ -1,18 +1,17 @@
 package com.magewr.mvvmi.interactors.Quotes
 
-import com.magewr.mvvmi.clients.RestClient
+import com.magewr.mvvmi.clients.ClientInterface
 import com.magewr.mvvmi.clients.apis.APIQuotes
 import com.magewr.mvvmi.scenes.main.model.QuotesResultModel
 import io.reactivex.rxjava3.core.Single
 
-class QuotesInteractor() {
-    private lateinit var client: RestClient<APIQuotes>
+interface QuotesInteractorInterface {
+    fun requestRandomQuotes(): Single<QuotesResultModel>
+}
 
-    constructor(client: RestClient<APIQuotes>) : this() {
-        this.client = client
-    }
+class QuotesInteractor(private val client: ClientInterface<APIQuotes>) : QuotesInteractorInterface {
 
-    fun requestRandomQuotes(): Single<QuotesResultModel> {
+    override fun requestRandomQuotes(): Single<QuotesResultModel> {
         return client.api.getRandomQuotes()
     }
 }

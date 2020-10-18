@@ -2,17 +2,16 @@ package com.magewr.mvvmi.scenes.main.viewmodel
 
 import com.magewr.mvvmi.bases.RxViewModel
 import com.magewr.mvvmi.bases.RxViewModelProtocol
-import com.magewr.mvvmi.interactors.Quotes.QuotesInteractor
+import com.magewr.mvvmi.interactors.Quotes.QuotesInteractorInterface
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-
 import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.schedulers.Schedulers.io
 import io.reactivex.rxjava3.subjects.PublishSubject
-import io.reactivex.rxjava3.subjects.Subject
 
 class QuotesViewModel() : RxViewModel() {
     class Input(
-        var getRandomQuotes: Subject<Unit>
+        var getRandomQuotes: Observer<Unit>
     ): RxViewModelProtocol.Input()
 
     class Output(
@@ -21,7 +20,7 @@ class QuotesViewModel() : RxViewModel() {
     ): RxViewModelProtocol.Output()
 
     class Dependency(
-        var quotesInteractor: QuotesInteractor
+        var quotesInteractor: QuotesInteractorInterface
     ): RxViewModelProtocol.Dependency()
 
     override lateinit var input: Input

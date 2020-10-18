@@ -14,29 +14,23 @@ import com.magewr.mvvmi.scenes.main.viewmodel.QuotesViewModel
 
 class MainActivity : RxActivity<QuotesViewModel>() {
     private lateinit var bnd: ActivityMainBinding
-    override lateinit var viewModel: QuotesViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         bnd = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-        // DI or Factory 통해서 주입받아야 함
         viewModel = QuotesViewModel(QuotesViewModel.Dependency(QuotesInteractor(RestClient(APIQuotes::class.java))))
-
-        bindInputs()
-        bindOutputs()
 
         viewModel.input.getRandomQuotes.onNext(Unit)
     }
 
-    private fun bindInputs() {
+    override fun bindInputs() {
         bnd.btnNext.clicks()
             .subscribe{ viewModel.input.getRandomQuotes.onNext(Unit) }
             .apply { disposeBag.add(this) }
-
     }
 
-    private fun bindOutputs() {
+    override fun bindOutputs() {
         viewModel.output.getRandomQuotesResult
             .subscribe{ quotes ->
                 bnd.txtQuotes.text = quotes

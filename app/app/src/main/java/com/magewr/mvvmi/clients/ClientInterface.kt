@@ -2,6 +2,7 @@ package com.magewr.mvvmi.clients
 
 import retrofit2.Retrofit
 
-interface ClientInterface<T : Any> {
-    fun <T : Any> createRetrofit(clazz: T): Retrofit
+interface ClientInterface<API : Any> {
+    fun createRetrofit(clazz: Class<API>): Retrofit
+    val api: API
 }
