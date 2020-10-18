@@ -11,11 +11,11 @@ import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-class RestClient<T : Any>(clazz: Class<T>) : ClientInterface<T> {
+class RestClient<API : Any>(clazz: Class<API>) : ClientInterface<API> {
 
     private val retrofit: Retrofit
     private val gson: Gson
-    val api: T
+    override val api: API
 
     init {
         gson = createGson()
@@ -23,7 +23,7 @@ class RestClient<T : Any>(clazz: Class<T>) : ClientInterface<T> {
         api = retrofit.create(clazz)
     }
 
-    override fun <T : Any> createRetrofit(clazz: T): Retrofit {
+    override fun createRetrofit(clazz: Class<API>): Retrofit {
         val logging = HttpLoggingInterceptor()
         logging.setLevel(HttpLoggingInterceptor.Level.BODY)
         val builder: OkHttpClient.Builder = OkHttpClient.Builder()
