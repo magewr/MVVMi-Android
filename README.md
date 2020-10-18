@@ -13,6 +13,5 @@ View 레이어는 각각의 플랫폼에 종속됩니다.
 
 ##
 
-Android 코드는 아직 미완성으로 지속 작업 중입니다.
 
 iOS Code : https://github.com/magewr/MVVMi-iOS
