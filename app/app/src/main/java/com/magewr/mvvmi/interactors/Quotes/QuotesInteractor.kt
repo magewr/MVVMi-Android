@@ -2,7 +2,7 @@ package com.magewr.mvvmi.interactors.Quotes
 
 import com.magewr.mvvmi.clients.ClientInterface
 import com.magewr.mvvmi.clients.apis.APIQuotes
-import com.magewr.mvvmi.scenes.main.model.QuotesResultModel
+import com.magewr.mvvmi.ui.main.model.QuotesResultModel
 import io.reactivex.rxjava3.core.Single
 
 interface QuotesInteractorInterface {
