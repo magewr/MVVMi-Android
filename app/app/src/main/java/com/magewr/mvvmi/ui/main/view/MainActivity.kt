@@ -1,4 +1,4 @@
-package com.magewr.mvvmi.scenes.main.view
+package com.magewr.mvvmi.ui.main.view
 
 import android.os.Bundle
 import android.util.Log
@@ -10,22 +10,24 @@ import com.magewr.mvvmi.clients.RestClient
 import com.magewr.mvvmi.clients.apis.APIQuotes
 import com.magewr.mvvmi.databinding.ActivityMainBinding
 import com.magewr.mvvmi.interactors.Quotes.QuotesInteractor
-import com.magewr.mvvmi.scenes.main.viewmodel.QuotesViewModel
+import com.magewr.mvvmi.ui.main.viewmodel.MainViewModel
+import java.util.concurrent.TimeUnit
 
-class MainActivity : RxActivity<QuotesViewModel>() {
+class MainActivity : RxActivity<MainViewModel>() {
     private lateinit var bnd: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         bnd = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-        viewModel = QuotesViewModel(QuotesViewModel.Dependency(QuotesInteractor(RestClient(APIQuotes::class.java))))
+        viewModel = MainViewModel(MainViewModel.Dependency(QuotesInteractor(RestClient(APIQuotes::class.java))))
 
         viewModel.input.getRandomQuotes.onNext(Unit)
     }
 
     override fun bindInputs() {
         bnd.btnNext.clicks()
+            .throttleFirst(300, TimeUnit.MILLISECONDS)
             .subscribe{ viewModel.input.getRandomQuotes.onNext(Unit) }
             .apply { disposeBag.add(this) }
     }

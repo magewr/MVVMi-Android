@@ -1,4 +1,4 @@
-package com.magewr.mvvmi.scenes.main.model
+package com.magewr.mvvmi.ui.main.model
 
 data class QuotesResultModel (
     val id: String,

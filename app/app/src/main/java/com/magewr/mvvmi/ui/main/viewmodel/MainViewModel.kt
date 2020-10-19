@@ -1,4 +1,4 @@
-package com.magewr.mvvmi.scenes.main.viewmodel
+package com.magewr.mvvmi.ui.main.viewmodel
 
 import com.magewr.mvvmi.bases.RxViewModel
 import com.magewr.mvvmi.bases.RxViewModelProtocol
@@ -9,7 +9,7 @@ import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.schedulers.Schedulers.io
 import io.reactivex.rxjava3.subjects.PublishSubject
 
-class QuotesViewModel() : RxViewModel() {
+class MainViewModel() : RxViewModel() {
     class Input(
         var getRandomQuotes: Observer<Unit>
     ): RxViewModelProtocol.Input()
