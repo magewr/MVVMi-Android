@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/img_user"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="16dp"
+            tools:src="@drawable/all_empty_profile" />
+
+        <TextView
+            android:id="@+id/txt_user_id"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="17sp"
+            tools:text="사용자이름이 여기에 뙇 멀티라인도 되는지 테스트"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            app:layout_constraintStart_toEndOf="@id/img_user"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/img_favorite"/>
+
+        <ImageView
+            android:id="@+id/img_favorite"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/txt_user_id"
+            tools:src="@drawable/btn_favorite"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

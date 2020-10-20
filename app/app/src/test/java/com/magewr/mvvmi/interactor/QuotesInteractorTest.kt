@@ -2,9 +2,9 @@ package com.magewr.mvvmi.interactor
 
 import com.magewr.mvvmi.RxTest
 import com.magewr.mvvmi.clients.RestClient
-import com.magewr.mvvmi.clients.apis.APIQuotes
-import com.magewr.mvvmi.interactors.Quotes.QuotesInteractor
-import com.magewr.mvvmi.ui.main.model.QuotesResultModel
+import com.magewr.mvvmi.clients.apis.APISearch
+import com.magewr.mvvmi.interactors.searchusers.SearchUsersInteractor
+import com.magewr.mvvmi.ui.main.model.SearchUsersResultModel
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.observers.TestObserver
 import org.hamcrest.CoreMatchers.`is`
@@ -22,25 +22,25 @@ class QuotesInteractorTest: RxTest() {
     @JvmField
     val rule = MockitoJUnit.rule()!!
 
-    @Mock lateinit var client: RestClient<APIQuotes>
-    @Mock lateinit var api: APIQuotes
+    @Mock lateinit var client: RestClient<APISearch>
+    @Mock lateinit var api: APISearch
 
-    private lateinit var testInteractor: QuotesInteractor
+    private lateinit var testInteractor: SearchUsersInteractor
 
     @Before
     fun setUp() {
-        testInteractor = QuotesInteractor(client)
+        testInteractor = SearchUsersInteractor(client)
         Mockito.`when`(client.api).thenReturn(api)
     }
 
     @Test
     fun getRandomQuotesTest() {
-        val quotesResult = QuotesResultModel("5aa4511b7832df00040ac9b8", "A beautiful program is like a beautiful theorem: It does the job elegantly.", "Butler Lampson", "5aa4511b7832df00040ac9b8")
-        Mockito.`when`(client.api.getRandomQuotes()).thenReturn(Single.just(quotesResult))
+        val quotesResult = SearchUsersResultModel("5aa4511b7832df00040ac9b8", "A beautiful program is like a beautiful theorem: It does the job elegantly.", "Butler Lampson", "5aa4511b7832df00040ac9b8")
+        Mockito.`when`(client.api.getSearchUsers()).thenReturn(Single.just(quotesResult))
 
-        val result = testInteractor.requestRandomQuotes()
+        val result = testInteractor.getSearchUsers()
 
-        val testObserver = TestObserver<QuotesResultModel>()
+        val testObserver = TestObserver<SearchUsersResultModel>()
         result.subscribe(testObserver)
         testObserver.assertComplete()
         testObserver.assertNoErrors()
