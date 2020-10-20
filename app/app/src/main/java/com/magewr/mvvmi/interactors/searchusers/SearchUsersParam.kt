@@ -8,5 +8,4 @@ data class SearchUsersParam (
     val order: String?,
     val page: Int,
     val per_page: Int = PER_PAGE
-) {
-}
+)

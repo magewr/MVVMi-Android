@@ -8,7 +8,6 @@ import com.magewr.mvvmi.interactors.searchusers.SearchUsersParam
 import com.magewr.mvvmi.ui.main.model.SearchUsersResultModel
 import com.magewr.mvvmi.ui.main.model.Users
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.annotations.NonNull
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.schedulers.Schedulers.io
@@ -22,6 +21,7 @@ class UserListViewModel(): RxViewModel() {
 
     class Output(
         var getUsersResult: Observable<SearchUsersResultModel>,
+        var favoriteChanged: Observable<Unit>,
         var error: Observable<String>
     ): RxViewModelProtocol.Output()
 
@@ -37,31 +37,19 @@ class UserListViewModel(): RxViewModel() {
     private var favoriteToggledSubject = PublishSubject.create<Users>()
     private var queryChangedSubject = PublishSubject.create<String>()
     private var getUsersResultSubject = PublishSubject.create<SearchUsersResultModel>()
+    private var favoriteChangedSubject = PublishSubject.create<Unit>()
     private var errorSubject = PublishSubject.create<String>()
 
     constructor(dependency: Dependency) : this() {
         this.dependency = dependency
         this.input = Input(favoriteToggled = favoriteToggledSubject, queryChanged = queryChangedSubject)
-        this.output = Output(getUsersResult = getUsersResultSubject, error = errorSubject)
+        this.output = Output(getUsersResult = getUsersResultSubject, favoriteChanged = favoriteChangedSubject, error = errorSubject)
 
         bindInputs()
         bindOutputs()
     }
 
     private fun bindInputs() {
-        /*
-        getRandomQuotesSubject
-            .subscribeOn(io())
-            .flatMapSingle { dependency.quotesInteractor.requestRandomQuotes() }
-            .map{ it.en }
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe ({ quotes ->
-                getRandomQuotesResultSubject.onNext(quotes)
-            }, { error ->
-                errorSubject.onNext(error.localizedMessage)
-            })
-            .apply { disposeBag.add(this) }
-         */
         queryChangedSubject
             .subscribeOn(io())
             .flatMapSingle { dependency.searchUsersInteractor.getSearchUsers(SearchUsersParam(it, null, null, 1)) }
@@ -73,9 +61,21 @@ class UserListViewModel(): RxViewModel() {
             })
             .apply { disposeBag.add(this) }
 
+
+        favoriteToggledSubject
+            .subscribeOn(io())
+            .subscribe{dependency.favoriteUsersInteractor.toggleFavoriteUser(it)}
+            .apply { disposeBag.add(this) }
     }
 
     private fun bindOutputs() {
-
+        dependency.favoriteUsersInteractor
+            .subject
+            .map{ favoriteChangedSubject.onNext(Unit) }
+            .flatMapSingle { dependency.searchUsersInteractor.favoriteUpdated() }
+            .subscribe{
+                getUsersResultSubject.onNext(it)
+            }
+            .apply { disposeBag.add(this) }
     }
 }

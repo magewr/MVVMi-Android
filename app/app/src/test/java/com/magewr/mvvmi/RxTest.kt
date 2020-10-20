@@ -1,6 +1,5 @@
 package com.magewr.mvvmi
 
-import com.magewr.mvvmi.viewmodel.MainViewModelTest
 import io.reactivex.rxjava3.android.plugins.RxAndroidPlugins
 import io.reactivex.rxjava3.plugins.RxJavaPlugins
 import io.reactivex.rxjava3.schedulers.Schedulers

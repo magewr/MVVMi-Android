@@ -7,8 +7,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.magewr.mvvmi.R
 import com.magewr.mvvmi.ui.main.model.Users
 import com.magewr.mvvmi.ui.main.view.viewholder.UserViewHolder
+import io.reactivex.rxjava3.core.Observer
 
-class UserListAdapter : RecyclerView.Adapter<UserViewHolder>() {
+class UserListAdapter(var favoriteCallBack: Observer<Users>) : RecyclerView.Adapter<UserViewHolder>() {
     var userList: List<Users>? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
@@ -24,6 +25,6 @@ class UserListAdapter : RecyclerView.Adapter<UserViewHolder>() {
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         if (userList == null)
             return
-        holder.render(userList!![position], false)
+        holder.render(userList!![position], favoriteCallBack)
     }
 }
