@@ -47,4 +47,20 @@ class MainViewModelTest: RxTest() {
         Assert.assertThat(result, `is`("A beautiful program is like a beautiful theorem: It does the job elegantly."))
 
     }
+
+    @Test
+    fun getRandomQuotesErrorTest() {
+        val someError = IllegalStateException("Parsing Error")
+        Mockito.`when`(interactor.requestRandomQuotes()).thenReturn(Single.error(someError))
+
+        val testObserver = TestObserver<String>()
+        testViewModel.output.error.subscribe(testObserver)
+        testViewModel.input.getRandomQuotes.onNext(Unit)
+
+        testObserver.assertNoErrors()
+
+        val result = testObserver.values()[0]
+        Assert.assertThat(result, `is`("Parsing Error"))
+
+    }
 }
