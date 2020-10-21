@@ -106,4 +106,11 @@ class UserListViewModelTest: RxTest() {
         testObserver.assertNoErrors()
         testObserver.assertNotComplete()
     }
+
+    /**
+     * 뷰모델에 작성해야 할 테스트케이스가 많은데..
+     * 출근은 해야하고....
+     * 출근 하면 과제할 시간이 없고...
+     * 24시간 제한이 야속하기만 합니다 ㅠㅠ
+     */
 }

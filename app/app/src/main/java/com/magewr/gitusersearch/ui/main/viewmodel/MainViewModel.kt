@@ -1,21 +1,17 @@
 package com.magewr.gitusersearch.ui.main.viewmodel
 
 import com.magewr.gitusersearch.bases.RxViewModel
-import com.magewr.gitusersearch.bases.RxViewModelProtocol
-import com.magewr.gitusersearch.interactors.searchusers.SearchUsersInteractorInterface
-import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.core.Observer
-import io.reactivex.rxjava3.subjects.PublishSubject
+import com.magewr.gitusersearch.bases.RxViewModelInterface
 
 class MainViewModel() : RxViewModel() {
     class Input(
-    ): RxViewModelProtocol.Input()
+    ): RxViewModelInterface.Input()
 
     class Output(
-    ): RxViewModelProtocol.Output()
+    ): RxViewModelInterface.Output()
 
     class Dependency(
-    ): RxViewModelProtocol.Dependency()
+    ): RxViewModelInterface.Dependency()
 
     override lateinit var input: Input
     override lateinit var output: Output

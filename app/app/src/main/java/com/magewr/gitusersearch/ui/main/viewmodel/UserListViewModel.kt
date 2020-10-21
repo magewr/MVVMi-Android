@@ -1,7 +1,7 @@
 package com.magewr.gitusersearch.ui.main.viewmodel
 
 import com.magewr.gitusersearch.bases.RxViewModel
-import com.magewr.gitusersearch.bases.RxViewModelProtocol
+import com.magewr.gitusersearch.bases.RxViewModelInterface
 import com.magewr.gitusersearch.interactors.favoriteusers.FavoriteUsersInteractorInterface
 import com.magewr.gitusersearch.interactors.searchusers.SearchUsersInteractorInterface
 import com.magewr.gitusersearch.interactors.searchusers.SearchUsersParam
@@ -18,19 +18,19 @@ class UserListViewModel(): RxViewModel() {
     class Input(
         var favoriteToggled: Observer<Users>,
         var queryChanged: Observer<String>
-    ): RxViewModelProtocol.Input()
+    ): RxViewModelInterface.Input()
 
     class Output(
         var getUsersResult: Observable<SearchUsersResultModel>,
         var favoriteChanged: Observable<Unit>,
         var error: Observable<String>
-    ): RxViewModelProtocol.Output()
+    ): RxViewModelInterface.Output()
 
     // 디펜던시는 클래스가 아닌 인터페이스를 레퍼런스로 사용, 용도에 맞게 API, Local 아이템을 넣어서 사용하게 함
     class Dependency(
         var searchUsersInteractor: SearchUsersInteractorInterface,
         var favoriteUsersInteractor: FavoriteUsersInteractorInterface
-    ): RxViewModelProtocol.Dependency()
+    ): RxViewModelInterface.Dependency()
 
     override lateinit var input: Input
     override lateinit var output: Output
