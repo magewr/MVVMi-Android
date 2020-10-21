@@ -1,7 +1,7 @@
-package com.magewr.mvvmi.interactor
+package com.magewr.gitusersearch.interactor
 
-import com.magewr.mvvmi.DummyDataFactory
-import com.magewr.mvvmi.RxTest
+import com.magewr.gitusersearch.DummyDataFactory
+import com.magewr.gitusersearch.RxTest
 import com.magewr.gitusersearch.clients.RestClient
 import com.magewr.gitusersearch.clients.apis.APISearch
 import com.magewr.gitusersearch.interactors.searchusers.LocalUsersInteractor
@@ -60,7 +60,8 @@ class SearchUsersInteractorTest: RxTest() {
                 1,
                 10
             )
-        Mockito.`when`(client.api.getSearchUsers(param.q, param.sort, param.order, param.page, param.per_page)).thenReturn(Single.just(DummyDataFactory.getResultModel()))
+        Mockito.`when`(client.api.getSearchUsers(param.q, param.sort, param.order, param.page, param.per_page)).thenReturn(Single.just(
+            DummyDataFactory.getResultModel()))
 
         val result = testInteractor.getSearchUsers(param)
 

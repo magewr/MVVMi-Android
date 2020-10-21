@@ -1,7 +1,7 @@
-package com.magewr.mvvmi.interactor
+package com.magewr.gitusersearch.interactor
 
-import com.magewr.mvvmi.DummyDataFactory
-import com.magewr.mvvmi.RxTest
+import com.magewr.gitusersearch.DummyDataFactory
+import com.magewr.gitusersearch.RxTest
 import com.magewr.gitusersearch.interactors.favoriteusers.FavoriteUsersInteractor
 import com.magewr.gitusersearch.interactors.favoriteusers.LocalFavoriteUsers
 import com.magewr.gitusersearch.ui.main.model.SearchUsersResultModel

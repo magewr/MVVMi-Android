@@ -1,4 +1,4 @@
-package com.magewr.mvvmi
+package com.magewr.gitusersearch
 
 import io.reactivex.rxjava3.android.plugins.RxAndroidPlugins
 import io.reactivex.rxjava3.plugins.RxJavaPlugins
@@ -10,7 +10,8 @@ import org.junit.runners.model.Statement
 
 open class RxTest {
     @Rule
-    @JvmField var testSchedulerRule = RxImmediateSchedulerRule()
+    @JvmField var testSchedulerRule =
+        RxImmediateSchedulerRule()
 
     class RxImmediateSchedulerRule : TestRule {
 

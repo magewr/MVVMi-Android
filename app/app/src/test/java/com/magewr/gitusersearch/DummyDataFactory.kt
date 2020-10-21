@@ -1,4 +1,4 @@
-package com.magewr.mvvmi
+package com.magewr.gitusersearch
 
 import com.magewr.gitusersearch.ui.main.model.SearchUsersResultModel
 import com.magewr.gitusersearch.ui.main.model.Users
