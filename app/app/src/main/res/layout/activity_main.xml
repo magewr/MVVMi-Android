@@ -5,7 +5,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.main.view.MainActivity">
+        tools:context="com.magewr.gitusersearch.ui.main.view.MainActivity">
 
         <EditText
             android:id="@+id/edit_query"
@@ -14,6 +14,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
+            android:hint="Query Here"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -24,7 +25,8 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="16dp"
-            app:tabMode="scrollable"
+            app:tabMode="fixed"
+            app:tabGravity="fill"
             app:layout_constraintTop_toBottomOf="@id/edit_query"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

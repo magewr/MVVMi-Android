@@ -1,13 +1,16 @@
 package com.magewr.mvvmi.viewmodel
 
+import com.magewr.mvvmi.DummyDataFactory
 import com.magewr.mvvmi.RxTest
-import com.magewr.mvvmi.interactors.favoriteusers.FavoriteUsersInteractor
-import com.magewr.mvvmi.interactors.searchusers.SearchUsersInteractor
-import com.magewr.mvvmi.interactors.searchusers.SearchUsersParam
-import com.magewr.mvvmi.ui.main.model.SearchUsersResultModel
-import com.magewr.mvvmi.ui.main.model.Users
-import com.magewr.mvvmi.ui.main.viewmodel.MainViewModel
-import com.magewr.mvvmi.ui.main.viewmodel.UserListViewModel
+import com.magewr.gitusersearch.commons.PER_PAGE
+import com.magewr.gitusersearch.interactors.favoriteusers.FavoriteUsersInteractor
+import com.magewr.gitusersearch.interactors.searchusers.LocalUsersInteractor
+import com.magewr.gitusersearch.interactors.searchusers.SearchUsersInteractor
+import com.magewr.gitusersearch.interactors.searchusers.SearchUsersParam
+import com.magewr.gitusersearch.ui.main.model.SearchUsersResultModel
+import com.magewr.gitusersearch.ui.main.model.Users
+import com.magewr.gitusersearch.ui.main.viewmodel.MainViewModel
+import com.magewr.gitusersearch.ui.main.viewmodel.UserListViewModel
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.observers.TestObserver
 import io.reactivex.rxjava3.subjects.PublishSubject
@@ -26,7 +29,8 @@ class UserListViewModelTest: RxTest() {
     @JvmField
     val rule = MockitoJUnit.rule()!!
 
-    @Mock lateinit var searchInteractor: SearchUsersInteractor
+    @Mock lateinit var apiInteractor: SearchUsersInteractor
+    @Mock lateinit var localInteractor: LocalUsersInteractor
     @Mock lateinit var favoriteInteractor: FavoriteUsersInteractor
 
     private lateinit var testViewModel: UserListViewModel
@@ -34,30 +38,33 @@ class UserListViewModelTest: RxTest() {
 
     @Before
     fun setUp() {
-        val userList = ArrayList<Users>()
-        userList.add(
-            Users("magewr", 32250713, "MDQ6VXNlcjMyMjUwNzEz", "https://avatars0.githubusercontent.com/u/32250713?v=4", "",
-                "https://api.github.com/users/magewr",
-                "https://github.com/magewr",
-                "https://api.github.com/users/magewr/followers",
-                "https://api.github.com/users/magewr/following{/other_user}",
-                "https://api.github.com/users/magewr/gists{/gist_id}",
-                "https://api.github.com/users/magewr/starred{/owner}{/repo}",
-                "https://api.github.com/users/magewr/subscriptions",
-                "https://api.github.com/users/magewr/orgs",
-                1)
-        )
-        usersResult = SearchUsersResultModel(1, false, userList)
-
-        val param = SearchUsersParam("magewr", null, null, 1, 10)
-        Mockito.`when`(searchInteractor.getSearchUsers(param)).thenReturn(Single.just(usersResult))
-        Mockito.`when`(favoriteInteractor.subject).thenReturn(PublishSubject.create())
-
-        testViewModel = UserListViewModel(UserListViewModel.Dependency(searchInteractor, favoriteInteractor))
+        usersResult = DummyDataFactory.getResultModel()
     }
 
+    /**
+     * API인터렉터가 있는 뷰모델은 EditText에 글자를 입력하면 API요청하여 결과를 Output에 전달해야 한다.
+     */
     @Test
     fun getUserListTest() {
+        val param =
+            SearchUsersParam(
+                "magewr",
+                null,
+                null,
+                1,
+                PER_PAGE
+            )
+        Mockito.`when`(apiInteractor.getSearchUsers(param)).thenReturn(Single.just(usersResult))
+        Mockito.`when`(favoriteInteractor.subject).thenReturn(PublishSubject.create())
+
+        testViewModel =
+            UserListViewModel(
+                UserListViewModel.Dependency(
+                    apiInteractor,
+                    favoriteInteractor
+                )
+            )
+
         val testObserver = TestObserver<SearchUsersResultModel>()
         testViewModel.output.getUsersResult.subscribe(testObserver)
         testViewModel.input.queryChanged.onNext("magewr")
@@ -66,5 +73,37 @@ class UserListViewModelTest: RxTest() {
 
         val result = testObserver.values()[0]
         Assert.assertThat(result.items[0].login, `is`("magewr"))
+    }
+
+    /**
+     * API 인터렉터가 있는 뷰모델은 EditText에 빈 값을 입력하면 실제 요청은 이루어지지 않아야 한다.
+     */
+    @Test
+    fun getUserListEmptyTest() {
+        val param =
+            SearchUsersParam(
+                "",
+                null,
+                null,
+                1,
+                PER_PAGE
+            )
+        Mockito.`when`(apiInteractor.getSearchUsers(param)).thenReturn(Single.never())
+        Mockito.`when`(favoriteInteractor.subject).thenReturn(PublishSubject.create())
+
+        testViewModel =
+            UserListViewModel(
+                UserListViewModel.Dependency(
+                    apiInteractor,
+                    favoriteInteractor
+                )
+            )
+
+        val testObserver = TestObserver<SearchUsersResultModel>()
+        testViewModel.output.getUsersResult.subscribe(testObserver)
+        testViewModel.input.queryChanged.onNext("")
+
+        testObserver.assertNoErrors()
+        testObserver.assertNotComplete()
     }
 }
