@@ -2,7 +2,7 @@ package com.magewr.mvvmi.bases
 
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 
-interface RxViewModelProtocol {
+interface RxViewModelInterface {
     abstract class Input
     abstract class Output
     abstract class Dependency
@@ -12,7 +12,7 @@ interface RxViewModelProtocol {
     val dependency: Dependency
 }
 
-abstract class RxViewModel: RxViewModelProtocol, Deinitializable {
+abstract class RxViewModel: RxViewModelInterface, Deinitializable {
     var disposeBag = CompositeDisposable()
 
     override fun deinitialize() {
