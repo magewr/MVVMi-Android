@@ -19,4 +19,6 @@ Android 코드에서는 Mockito를 이용하여 각각의 레이어에서 UnitTe
 
 코드는 지속 변경될 수 있습니다.
 
+실제 활용한 코드는 브랜치에서 확인할 수 있습니다.
+
 iOS Code : https://github.com/magewr/MVVMi-iOS
