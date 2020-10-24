@@ -5,6 +5,8 @@ Clean Architecture 기반의 MVVM + Interactor 로 구성하였습니다.
 
 Android, iOS 통합 아키텍쳐로 Model, ViewModel, Interactor 레이어는 언어만 다를 뿐 동일한 로직을 사용하는 것이 목표입니다.
 
+AAC의 ViewModel은 사용하지 않습니다. 여기서의 ViewModel은 안드로이드 플랫폼에 종속되지 않습니다.
+
 ##
 
 View 레이어는 각각의 플랫폼에 종속됩니다.
