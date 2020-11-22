@@ -21,4 +21,3 @@ Android 코드에서는 Mockito를 이용하여 각각의 레이어에서 UnitTe
 
 iOS Code : https://github.com/magewr/MVVMi-iOS
 
-프로젝트 오픈 시 상위 app 폴더를 오픈하시면 됩니다.
